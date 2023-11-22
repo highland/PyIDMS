@@ -11,6 +11,20 @@ class Pointer:
             raise ValueError('Line number must be positive and less than 255')
         self._pointer: bytes = page.to_bytes(length=3) + line.to_bytes(length=1)
 
+    @staticmethod
+    def from_bytes(chars: bytes) -> 'Pointer':
+        """
+        Alternative constructor for Pointer.
+        :param chars: 4 bytes representing a Pointer.
+        :return: Pointer object.
+        :raises ValueError: If the input is not 4 bytes long.
+        """
+        if len(chars) != 4:
+            raise ValueError('Pointer must be 4 bytes long')
+        new_pointer = Pointer() # blank pointer
+        new_pointer._pointer = chars # inject the bytes into the blank pointer
+        return new_pointer
+
     @property
     def page(self) -> int:
         return int.from_bytes(self._pointer[:3])

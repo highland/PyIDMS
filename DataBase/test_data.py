@@ -21,5 +21,11 @@ class TestPointer(unittest.TestCase):
         other = Pointer(1812, 3)
         self.assertTrue(self.test_pointer == other)
 
+    def test_from_bytes(self):
+        byte_repr = (2023).to_bytes(length=3) + (6).to_bytes(length=1)
+        other = Pointer.from_bytes(byte_repr)
+        self.assertEqual(other.page, 2023)
+        self.assertEqual(other.line, 6)
+
 if __name__ == '__main__':
     unittest.main()
