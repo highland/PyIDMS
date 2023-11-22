@@ -5,6 +5,10 @@ class Pointer:
     The remaining 8 bits represent the Line Number.
     """
     def __init__(self, page: int = 0, line: int = 0) -> None:
+        if page > 8388607 or page < 0:
+            raise ValueError('Page number must be positive and less than 8388607')
+        if line > 255 or line < 0:
+            raise ValueError('Line number must be positive and less than 255')
         self._pointer: bytes = page.to_bytes(length=3) + line.to_bytes(length=1)
 
     @property
